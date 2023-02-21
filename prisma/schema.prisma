@@ -9,3 +9,38 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+
+  Credential Credential[]
+  Network    Network[]
+
+  @@map("users")
+}
+
+model Credential {
+  id       Int    @id @default(autoincrement())
+  user     User   @relation(fields: [userId], references: [id])
+  title    String
+  url      String
+  username String
+  password String
+
+  userId Int
+
+  @@map("credentials")
+}
+
+model Network {
+  id       Int    @id @default(autoincrement())
+  user     User   @relation(fields: [userId], references: [id])
+  title    String
+  network  String
+  password String
+  userId   Int
+
+  @@map("networks")
+}
