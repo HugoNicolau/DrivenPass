@@ -1,5 +1,6 @@
 import express, {Response, Request} from "express";
 import dotenv from "dotenv";
+import signupRouter from "./routes/signupRouter.js";
 
 
 //config
@@ -12,6 +13,8 @@ const port = process.env.PORT || 5000;
 app.get("/health", (req:Request, res:Response) => {
     res.send("Ok!");
 })
+
+app.use(signupRouter);
 
 
 app.listen(port, () => {
