@@ -15,7 +15,7 @@ async function signIn(user: signUpBody) {
     return console.log("Wrong password, try again!");
   }
 
-  const token = generateToken(email);
+  const token = generateToken(userExists.id);
   return token;
 }
 
@@ -23,13 +23,16 @@ async function comparePass(password: string, hash: string) {
   return await bcrypt.compare(password, hash);
 }
 
-async function generateToken(email:string){
-const data = {email};
-const secretKey = process.env.JWT_SECRET;
 
+async function generateToken(userId:number){
+const data = {userId};
+const secretKey = process.env.JWT_SECRET;
+console.log(data, "datagenerate");
 const token = jwt.sign(data, secretKey);
-return token;
+return {token};
 }
+
+
 
 const signinService = { signIn };
 

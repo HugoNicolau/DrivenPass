@@ -29,6 +29,6 @@ function encriptPass(password: string) {
   return hash;
 }
 
-const signupService = { signUp };
+const signupService = { signUp, encriptPass };
 
 export default signupService;
