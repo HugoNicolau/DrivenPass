@@ -8,8 +8,16 @@ try{
     const loginUser = await signinService.signIn(user);
     return res.status(httpStatus.CREATED).send(loginUser);
 } catch(err){
-    console.log(err);
-    res.sendStatus(500);
+    if(err.name === "ValidationError"){
+        return res.status(httpStatus.BAD_REQUEST).send(err.message);
+    }
+    if(err.name === "NotFoundEmailError"){
+        return res.status(httpStatus.BAD_REQUEST).send(err.message);
+    }
+    if(err.name === "WrongPasswordError"){
+        return res.status(httpStatus.BAD_REQUEST).send(err.message);
+    }
+    res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
 }
 
 }

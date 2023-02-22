@@ -11,7 +11,7 @@ async function signUp(user: signUpBody) {
 }
 
 async function emailAlreadyInUse(user: signUpBody) {
-  return prisma.user.findUnique({
+  return await prisma.user.findUnique({
     where: {
       email: user.email,
     },

@@ -5,39 +5,44 @@ import dotenv from "dotenv"
 dotenv.config();
 
 async function auth(req:AuthenticatedRequest, res:Response, next:NextFunction){
-const {authorization} = req.headers;
+    try{
+        const {authorization} = req.headers;
 
-if(!authorization){
-    return res.sendStatus(httpStatus.UNAUTHORIZED);
-}
-const BearerToken = authorization.split(" ");
+        if(!authorization){
+            return res.sendStatus(httpStatus.UNAUTHORIZED);
+        }
+        const BearerToken = authorization.split(" ");
+        
+        const [bearer, token] = BearerToken;
+        
+        if(bearer !=="Bearer"){
+            return res.sendStatus(httpStatus.UNAUTHORIZED);
+        }
+        if(!token){
+            return res.sendStatus(httpStatus.UNAUTHORIZED);
+        }
+        const {userId} = await verifyToken(token) as JWTPayload;
+        
+        req.userId = userId
+        
+        return next();
+    }catch(err){
+        console.log(err);
+            return res.sendStatus(httpStatus.UNAUTHORIZED);
+       
+    }
 
-const [bearer, token] = BearerToken;
-
-if(bearer !=="Bearer"){
-    return res.sendStatus(httpStatus.UNAUTHORIZED);
-}
-if(!token){
-    return res.sendStatus(httpStatus.UNAUTHORIZED);
-}
-const {userId} = await verifyToken(token) as JWTPayload;
-
-req.userId = userId
-
-return next();
 }
 
 async function verifyToken(token:string){
     const secretKey = process.env.JWT_SECRET;
-    try{
+  
+ 
       const data = await jwt.verify(token, secretKey)
-      return data;
-    } catch(err){
     
-      throw console.log(err);
-      
-    }
-    }
+   
+      return data;
+}
 
 type JWTPayload = {
     userId:number

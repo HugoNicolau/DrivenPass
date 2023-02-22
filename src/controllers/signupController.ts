@@ -5,11 +5,16 @@ import signupService from "../services/signupService.js";
 async function signUp(req: Request, res: Response) {
   const user = req.body;
   try {
-    const createUser = signupService.signUp(user);
+    const createUser = await signupService.signUp(user);
     return res.status(httpStatus.CREATED).send(createUser);
   } catch (err) {
-    console.log(err);
-    res.sendStatus(500);
+    if (err.name === "ValidationError") {
+      return res.status(httpStatus.BAD_REQUEST).send(err.message);
+    }
+    if (err.name === "EmailInUseError") {
+      return res.status(httpStatus.BAD_REQUEST).send(err.message);
+    }
+    res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 }
 

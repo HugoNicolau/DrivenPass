@@ -1,9 +1,17 @@
 import titleInUseError from "../errors/titleInUseError.js";
+import validationError from "../errors/validationError.js";
+import schemaValidation from "../middlewares/schemaValidation.js";
 import credentialsRepository from "../repositories/credentialsRepository.js";
 import { credentialType } from "../types/credentialTypes.js";
 import signupService from "./signupService.js";
 
 async function postCredentials(credential:credentialType, userId:number){
+
+    const validate = schemaValidation.validateCredential(credential);
+    if(validate){
+        throw validationError(validate)
+    }
+
 
     const titleInUse = await credentialsRepository.titleInUseByUser(credential.title);
     if(titleInUse){

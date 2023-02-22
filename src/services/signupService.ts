@@ -2,15 +2,21 @@ import schemaValidation from "../middlewares/schemaValidation.js";
 import signupRepository from "../repositories/signupRepository.js";
 import { signUpBody } from "../types/userTypes.js";
 import bcrypt from "bcrypt";
+import validationError from "../errors/validationError.js";
+import emailInUseError from "../errors/emailInUseError.js";
 
 async function signUp(user: signUpBody) {
   const { email, password } = user;
 
-  schemaValidation.validateSignup(user);
+  const validate = schemaValidation.validateSignup(user);
+
+  if(validate){
+    throw validationError(validate)
+}
 
   const emailExistent = await signupRepository.emailAlreadyInUse(user);
   if (emailExistent) {
-    return console.log("Email já existe", emailExistent);
+    throw emailInUseError();
   }
   const hash = await encriptPass(password);
 
