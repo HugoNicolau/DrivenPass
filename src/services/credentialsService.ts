@@ -1,3 +1,4 @@
+import titleInUseError from "../errors/titleInUseError.js";
 import credentialsRepository from "../repositories/credentialsRepository.js";
 import { credentialType } from "../types/credentialTypes.js";
 import signupService from "./signupService.js";
@@ -6,7 +7,7 @@ async function postCredentials(credential:credentialType, userId:number){
 
     const titleInUse = await credentialsRepository.titleInUseByUser(credential.title);
     if(titleInUse){
-        return console.log("title already in use by you");
+        throw titleInUseError();       
     }
     const hash = await signupService.encriptPass(credential.password);
 
