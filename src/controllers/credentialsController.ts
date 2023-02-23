@@ -35,6 +35,19 @@ async function getCredentials(req:AuthenticatedRequest, res: Response){
     }
 }
 
-const credentialsController = { postCredentials, getCredentials };
+async function getOneCredential(req:AuthenticatedRequest, res:Response){
+  const {userId} = req;
+  const id:number = Number(req.params.id);
+  try{
+    const credential = await credentialsService.getOneCredential(userId, id);
+    console.log(credential, "credential")
+    return res.status(httpStatus.OK).send(credential);
+  }catch(err){
+    console.log(err);
+    res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+  }
+}
+
+const credentialsController = { postCredentials, getCredentials, getOneCredential };
 
 export default credentialsController;

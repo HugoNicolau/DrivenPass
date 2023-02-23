@@ -48,6 +48,15 @@ async function getCredentials(id: number) {
     return Promise.all(newCredentials);
 }
 
+async function getOneCredential(userId:number, id:number){
+  const userCredential = await credentialsRepository.getOneCredential(userId, id);
+  
+  const decryptedPassword = await decryptPass(userCredential.password);
+  userCredential.password = decryptedPassword;
+
+  return userCredential;
+}
+
 async function encryptPass(password: string) {
   
   const encrypted = cryptr.encrypt(password);
@@ -59,6 +68,6 @@ async function decryptPass(password: string) {
   return decrypted;
 }
 
-const credentialsService = { postCredentials, encryptPass, decryptPass, getCredentials };
+const credentialsService = { postCredentials, encryptPass, decryptPass, getCredentials, getOneCredential };
 
 export default credentialsService;
