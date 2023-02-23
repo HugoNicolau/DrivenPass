@@ -3,9 +3,11 @@ import validationError from "../errors/validationError.js";
 import schemaValidation from "../middlewares/schemaValidation.js";
 import credentialsRepository from "../repositories/credentialsRepository.js";
 import { credentialType } from "../types/credentialTypes.js";
-import signupService from "./signupService.js";
+import Cryptr from "cryptr"
 
 async function postCredentials(credential:credentialType, userId:number){
+
+    
 
     const validate = schemaValidation.validateCredential(credential);
     if(validate){
@@ -17,7 +19,7 @@ async function postCredentials(credential:credentialType, userId:number){
     if(titleInUse){
         throw titleInUseError();       
     }
-    const hash = await signupService.encriptPass(credential.password);
+    const hash = await encryptr(credential.password);
 
     const newCredential:credentialType = {
         userId,
@@ -32,9 +34,18 @@ async function postCredentials(credential:credentialType, userId:number){
     return result;
 }
 
+async function encryptr(password:string){
+    const cryptr = new Cryptr(process.env.CRYPT_SECRET);
+    const encrypted = cryptr.encrypt(password);
+    return encrypted;
+}
+async function decryptr(password:string){
+    const cryptr = new Cryptr(process.env.CRYPT_SECRET);
+    const decrypted = cryptr.encrypt(password);
+    return decrypted;
+}
 
 
-
-const credentialsService = {postCredentials};
+const credentialsService = {postCredentials, encryptr, decryptr};
 
 export default credentialsService;

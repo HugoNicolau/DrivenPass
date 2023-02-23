@@ -8,7 +8,7 @@ import notFoundEmailError from "../errors/notFoundEmailError.js";
 import wrongPasswordError from "../errors/wrongPasswordError.js";
 
 async function signIn(user: signUpBody) {
-  const { password } = user;
+  const { email, password } = user;
 
   const validate = schemaValidation.validateSignup(user);
   if (validate) {
@@ -22,7 +22,8 @@ async function signIn(user: signUpBody) {
 
     throw notFoundEmailError();
   }
-  const confirmPass = comparePass(password, userExists.password);
+  const confirmPass = await comparePass(password, userExists.password);
+  console.log("confirmapassresult", confirmPass)
   if (!confirmPass) {
     console.log("3");
 
