@@ -35,11 +35,23 @@ async function getOneNetwork(req:AuthenticatedRequest, res:Response){
     const result = await networksService.getOneNetwork(userId, id);
         return res.status(httpStatus.OK).send(result);
     }catch(err){
-
+        console.log(err);
+        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 
+async function deleteOneNetwork(req:AuthenticatedRequest, res:Response){
+    try{
+        const {userId}=req;
+        const id:number = Number(req.params.id);
+        const result = await networksService.deleteOneNetwork(userId,id);
+        return res.status(httpStatus.OK).send(result);
+    }catch(err){
+        console.log(err);
+        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
 
-const networksController = {postNetworks, getNetworks, getOneNetwork};
+const networksController = {postNetworks, getNetworks, getOneNetwork, deleteOneNetwork};
 
 export default networksController;

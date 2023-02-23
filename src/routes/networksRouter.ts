@@ -8,6 +8,7 @@ const networksRouter = Router()
 .post("/networks", networksController.postNetworks)
 .get("/networks", networksController.getNetworks)
 .get("/networks/:id", networksController.getOneNetwork)
+.delete("/networks/:id", networksController.deleteOneNetwork);
 
 
 export default networksRouter;

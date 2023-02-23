@@ -52,7 +52,12 @@ async function getOneNetwork(userId:number, id:number){
     return userNetWork;
 }
 
+async function deleteOneNetwork(userId:number, id:number){
+    const deleted = await networkRepository.deleteOneNetwork(userId,id);
+    return deleted;
+}
 
-const networksService = {postNetworks, getNetworks, getOneNetwork};
+
+const networksService = {postNetworks, getNetworks, getOneNetwork, deleteOneNetwork};
 
 export default networksService;
