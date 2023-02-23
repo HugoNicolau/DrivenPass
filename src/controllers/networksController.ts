@@ -10,6 +10,18 @@ async function postNetworks(req: AuthenticatedRequest, res:Response){
 
     try{
         await networksService.postNetworks(network, userId);
+        return res.sendStatus(httpStatus.CREATED);
+    }catch(err){
+        console.log(err);
+        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
+async function getNetworks(req: AuthenticatedRequest, res:Response){
+    const {userId} = req;
+    try{
+        const result = await networksService.getNetworks(userId);
+        return res.status(httpStatus.OK).send(result)
     }catch(err){
         console.log(err);
         return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
@@ -17,6 +29,6 @@ async function postNetworks(req: AuthenticatedRequest, res:Response){
 }
 
 
-const networksController = {postNetworks};
+const networksController = {postNetworks, getNetworks};
 
 export default networksController;

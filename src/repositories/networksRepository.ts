@@ -13,7 +13,14 @@ async function postNetworks(networkFull:NetworkType){
     })
 }
 
+async function getNetworks(userId:number){
+    return prisma.network.findMany({
+        where:{
+            userId
+        }
+    })
+}
 
-const networkRepository=  {postNetworks}
+const networkRepository=  {postNetworks, getNetworks}
 
 export default networkRepository;

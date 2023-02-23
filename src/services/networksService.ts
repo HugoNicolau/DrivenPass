@@ -1,13 +1,13 @@
 import validationError from "../errors/validationError";
 import schemaValidation from "../middlewares/schemaValidation";
 import { NetworkType } from "../types/networkTypes";
-import Cryptr from "cryptr";
-import dotenv from "dotenv";
+// import Cryptr from "cryptr";
+// import dotenv from "dotenv";
 import credentialsService from "./credentialsService";
 import networkRepository from "../repositories/networksRepository";
 
-dotenv.config();
-const cryptr = new Cryptr(process.env.CRYPTR_SECRET as string);
+// dotenv.config();
+// const cryptr = new Cryptr(process.env.CRYPTR_SECRET as string);
 
 
 async function postNetworks(network:NetworkType, userId:number){
@@ -31,7 +31,20 @@ return result;
 
 }
 
+async function getNetworks(userId:number){
+    const userNetworks = await networkRepository.getNetworks(userId);
+    const newNetworks = userNetworks.map(async(net) => {
+        const decryptedPassword = await credentialsService.decryptPass(net.password);
+        return {
+            ...net,
+            password:decryptedPassword
+        }
+    });
+    return Promise.all(newNetworks);
 
-const networksService = {postNetworks};
+}
+
+
+const networksService = {postNetworks, getNetworks};
 
 export default networksService;
