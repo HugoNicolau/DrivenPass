@@ -22,6 +22,14 @@ async function saveCredential(credential:credentialType){
     })
 }
 
-const credentialsRepository = { titleInUseByUser, saveCredential };
+async function getCredentials(id:number){
+  return prisma.credential.findMany({
+    where:{
+      userId:id
+    }
+  })
+}
+
+const credentialsRepository = { titleInUseByUser, saveCredential, getCredentials };
 
 export default credentialsRepository;

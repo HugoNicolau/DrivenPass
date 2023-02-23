@@ -7,6 +7,7 @@ const credentialsRouter = Router();
 credentialsRouter
 .all("/*", authFunctions.auth)
 .post("/credentials", credentialsController.postCredentials)
-.get("/credentials")
+.get("/credentials", credentialsController.getCredentials)
+
 
 export default credentialsRouter;
