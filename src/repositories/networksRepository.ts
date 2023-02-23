@@ -21,6 +21,15 @@ async function getNetworks(userId:number){
     })
 }
 
-const networkRepository=  {postNetworks, getNetworks}
+async function getOneNetwork(userId:number, id:number){
+    return prisma.network.findFirst({
+        where: {
+            id,
+            userId
+        }
+    })
+}
+
+const networkRepository=  {postNetworks, getNetworks, getOneNetwork}
 
 export default networkRepository;

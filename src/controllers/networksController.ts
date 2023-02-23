@@ -28,7 +28,18 @@ async function getNetworks(req: AuthenticatedRequest, res:Response){
     }
 }
 
+async function getOneNetwork(req:AuthenticatedRequest, res:Response){
+    try{
+    const {userId} = req;
+    const id:number = Number(req.params.id);
+    const result = await networksService.getOneNetwork(userId, id);
+        return res.status(httpStatus.OK).send(result);
+    }catch(err){
 
-const networksController = {postNetworks, getNetworks};
+    }
+}
+
+
+const networksController = {postNetworks, getNetworks, getOneNetwork};
 
 export default networksController;
