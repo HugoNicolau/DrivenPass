@@ -9,36 +9,50 @@ async function titleInUseByUser(title: string) {
   });
 }
 
-async function saveCredential(credential:credentialType){
-    const {userId, title, url, username, password} = credential
-    return prisma.credential.create({
-        data:{
-            userId,
-            title,
-            url,
-            username,
-            password
-        }
-    })
+async function saveCredential(credential: credentialType) {
+  const { userId, title, url, username, password } = credential;
+  return prisma.credential.create({
+    data: {
+      userId,
+      title,
+      url,
+      username,
+      password,
+    },
+  });
 }
 
-async function getCredentials(id:number){
+async function getCredentials(id: number) {
   return prisma.credential.findMany({
-    where:{
-      userId:id
-    }
-  })
+    where: {
+      userId: id,
+    },
+  });
 }
 
-async function getOneCredential(userId:number, id:number){
+async function getOneCredential(userId: number, id: number) {
   return prisma.credential.findFirst({
-    where:{
+    where: {
       id,
-      userId
-    }
-  })
+      userId,
+    },
+  });
 }
 
-const credentialsRepository = { titleInUseByUser, saveCredential, getCredentials, getOneCredential };
+async function deleteOneCredential(userId: number, id: number) {
+  return prisma.credential.deleteMany({
+    where: {
+      AND: [{ id: id }, { userId: userId }],
+    },
+  });
+}
+
+const credentialsRepository = {
+  titleInUseByUser,
+  saveCredential,
+  getCredentials,
+  getOneCredential,
+  deleteOneCredential
+};
 
 export default credentialsRepository;

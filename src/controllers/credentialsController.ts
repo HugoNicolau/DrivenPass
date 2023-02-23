@@ -40,7 +40,6 @@ async function getOneCredential(req:AuthenticatedRequest, res:Response){
   const id:number = Number(req.params.id);
   try{
     const credential = await credentialsService.getOneCredential(userId, id);
-    console.log(credential, "credential")
     return res.status(httpStatus.OK).send(credential);
   }catch(err){
     console.log(err);
@@ -48,6 +47,19 @@ async function getOneCredential(req:AuthenticatedRequest, res:Response){
   }
 }
 
-const credentialsController = { postCredentials, getCredentials, getOneCredential };
+async function deleteOneCredential(req:AuthenticatedRequest, res:Response){
+  const {userId} = req;
+  const id:number = Number(req.params.id);
+  try{
+    const result = await credentialsService.deleteOneCredential(userId,id);
+    return res.status(httpStatus.OK).send(result);
+
+  }catch(err){
+    console.log(err);
+    res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+  }
+}
+
+const credentialsController = { postCredentials, getCredentials, getOneCredential, deleteOneCredential };
 
 export default credentialsController;

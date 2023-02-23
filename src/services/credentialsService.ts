@@ -57,6 +57,11 @@ async function getOneCredential(userId:number, id:number){
   return userCredential;
 }
 
+async function deleteOneCredential(userId:number, id:number){
+  const deleted = await credentialsRepository.deleteOneCredential(userId, id);
+  return deleted;
+}
+
 async function encryptPass(password: string) {
   
   const encrypted = cryptr.encrypt(password);
@@ -68,6 +73,6 @@ async function decryptPass(password: string) {
   return decrypted;
 }
 
-const credentialsService = { postCredentials, encryptPass, decryptPass, getCredentials, getOneCredential };
+const credentialsService = { postCredentials, encryptPass, decryptPass, getCredentials, getOneCredential, deleteOneCredential };
 
 export default credentialsService;

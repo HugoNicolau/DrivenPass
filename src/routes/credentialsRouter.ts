@@ -9,5 +9,6 @@ credentialsRouter
   .post("/credentials", credentialsController.postCredentials)
   .get("/credentials", credentialsController.getCredentials)
   .get("/credentials/:id", credentialsController.getOneCredential)
+  .delete("/credentials/:id", credentialsController.deleteOneCredential)
 
 export default credentialsRouter;
