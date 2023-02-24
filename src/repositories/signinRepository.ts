@@ -1,8 +1,8 @@
 import prisma from "../database/database.js";
-import { signUpBody } from "../types/userTypes.js";
+import { SignUpBody } from "../types/userTypes.js";
 
 
-async function getUser(user:signUpBody){
+async function getUser(user:SignUpBody){
 return prisma.user.findUnique({
     where:{
         email:user.email

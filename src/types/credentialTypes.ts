@@ -1,4 +1,4 @@
-export type credentialType = {
+export type CredentialType = {
     userId?:number,
     title:string,
     url:string,

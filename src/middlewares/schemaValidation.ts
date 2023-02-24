@@ -1,12 +1,12 @@
-import { signUpBody } from "../types/userTypes.js";
+import { SignUpBody } from "../types/userTypes.js";
 import { signupSchema, signinSchema } from "../schemas/userSchema.js";
-import { credentialType } from "../types/credentialTypes.js";
+import { CredentialType } from "../types/credentialTypes.js";
 import { credentialSchema } from "../schemas/credentialSchema.js";
 import { NetworkType } from "../types/networkTypes.js";
 import { networkSchema } from "../schemas/networkSchema.js";
 
 
-function validateSignup(user: signUpBody){
+function validateSignup(user: SignUpBody){
     const validation = signupSchema.validate(user);
     if(validation.error){
         const errors = validation.error.details.map( detail => detail.message);
@@ -14,7 +14,7 @@ function validateSignup(user: signUpBody){
         return errors;
     }
 }
-function validateSignin(user: signUpBody){
+function validateSignin(user: SignUpBody){
     const validation = signinSchema.validate(user);
     if(validation.error){
         const errors = validation.error.details.map( detail => detail.message);
@@ -23,7 +23,7 @@ function validateSignin(user: signUpBody){
     }
 }
 
-function validateCredential(credential:credentialType){
+function validateCredential(credential:CredentialType){
     const validation = credentialSchema.validate(credential);
     if(validation.error){
         const errors = validation.error.details.map(detail => detail.message)

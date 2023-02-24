@@ -1,5 +1,5 @@
 import signinRepository from "../repositories/signinRepository.js";
-import { signUpBody } from "../types/userTypes.js";
+import { SignUpBody } from "../types/userTypes.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import schemaValidation from "../middlewares/schemaValidation.js";
@@ -7,7 +7,7 @@ import validationError from "../errors/validationError.js";
 import notFoundEmailError from "../errors/notFoundEmailError.js";
 import wrongPasswordError from "../errors/wrongPasswordError.js";
 
-async function signIn(user: signUpBody) {
+async function signIn(user: SignUpBody) {
   const { email, password } = user;
 
   const validate = schemaValidation.validateSignin(user);

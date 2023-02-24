@@ -1,7 +1,7 @@
 import prisma from "../database/database.js";
-import { signUpBody } from "../types/userTypes.js";
+import { SignUpBody } from "../types/userTypes.js";
 
-async function signUp(user: signUpBody) {
+async function signUp(user: SignUpBody) {
   return prisma.user.create({
     data: {
       email: user.email,
@@ -10,7 +10,7 @@ async function signUp(user: signUpBody) {
   });
 }
 
-async function emailAlreadyInUse(user: signUpBody) {
+async function emailAlreadyInUse(user: SignUpBody) {
   return await prisma.user.findUnique({
     where: {
       email: user.email,

@@ -1,11 +1,11 @@
 import schemaValidation from "../middlewares/schemaValidation.js";
 import signupRepository from "../repositories/signupRepository.js";
-import { signUpBody } from "../types/userTypes.js";
+import { SignUpBody } from "../types/userTypes.js";
 import bcrypt from "bcrypt";
 import validationError from "../errors/validationError.js";
 import emailInUseError from "../errors/emailInUseError.js";
 
-async function signUp(user: signUpBody) {
+async function signUp(user: SignUpBody) {
   const { email, password } = user;
 
   const validate = schemaValidation.validateSignup(user);

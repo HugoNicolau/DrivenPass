@@ -2,7 +2,7 @@ import titleInUseError from "../errors/titleInUseError.js";
 import validationError from "../errors/validationError.js";
 import schemaValidation from "../middlewares/schemaValidation.js";
 import credentialsRepository from "../repositories/credentialsRepository.js";
-import { credentialType } from "../types/credentialTypes.js";
+import { CredentialType } from "../types/credentialTypes.js";
 import Cryptr from "cryptr";
 import dotenv from "dotenv";
 import notFoundError from "../errors/notFoundError.js";
@@ -10,7 +10,7 @@ import notFoundError from "../errors/notFoundError.js";
 dotenv.config();
 const cryptr = new Cryptr(process.env.CRYPTR_SECRET as string);
 
-async function postCredentials(credential: credentialType, userId: number) {
+async function postCredentials(credential: CredentialType, userId: number):Promise<CredentialType> {
   const validate = schemaValidation.validateCredential(credential);
   if (validate) {
     throw validationError(validate);
@@ -24,7 +24,7 @@ async function postCredentials(credential: credentialType, userId: number) {
   }
   const hash = await encryptPass(credential.password);
 
-  const newCredential: credentialType = {
+  const newCredential: CredentialType = {
     userId,
     title: credential.title,
     url: credential.url,
