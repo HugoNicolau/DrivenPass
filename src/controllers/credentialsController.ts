@@ -9,9 +9,9 @@ async function postCredentials(req: AuthenticatedRequest, res: Response) {
   const credential: CredentialType = req.body;
 
   try {
-    await credentialsService.postCredentials(credential, userId);
+    const result = await credentialsService.postCredentials(credential, userId);
 
-    res.sendStatus(httpStatus.CREATED);
+    res.status(httpStatus.CREATED).send(result);
   } catch (err) {
     console.log(err);
     if (err.name === "TitleInUseError") {

@@ -115,3 +115,228 @@
                 expect(result.status).toBe(httpStatus.UNAUTHORIZED);
             });
         });
+
+        describe('GET /credentials', () => {
+            let token: string;
+            let userId: number;
+        
+            beforeAll(async () => {
+                const userBody = await generateBody();
+                const response = await api.post('/signup').send(userBody);
+                userId = response.body.id;
+                const loginResponse = await api.post('/signin').send(userBody);
+                token = loginResponse.body.token;
+            });
+        
+            it('Should respond with 200 if get networks correctly', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                
+                await api.post('/credentials').set("Authorization", `Bearer ${token}`).send(body);
+                const result = await api.get('/credentials').set("Authorization", `Bearer ${token}`);
+
+        
+                expect(result.status).toBe(httpStatus.OK)
+            });
+        
+            it('Should respond with 401 if no authentication token is provided', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                const result = await api.get('/credentials').send(body);
+                expect(result.status).toBe(httpStatus.UNAUTHORIZED);
+            });
+        
+            it('Should respond with 401 if invalid authentication token is provided', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                const invalidToken = 'invalidToken';
+                
+                const result = await api.get('/credentials').set("Authorization", `Bearer ${invalidToken}`).send(body);
+                expect(result.status).toBe(httpStatus.UNAUTHORIZED);
+            });
+            it('Should respond with 401 if invalid authentication is provided', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                const invalidToken = 'invalidToken';
+                
+                const result = await api.get('/credentials').set("Authorization", `Bear ${invalidToken}`).send(body);
+                expect(result.status).toBe(httpStatus.UNAUTHORIZED);
+            });
+        });
+
+        describe('GET /credentials/:id', () => {
+            let token: string;
+            let userId: number;
+        
+            beforeAll(async () => {
+                const userBody = await generateBody();
+                const response = await api.post('/signup').send(userBody);
+                userId = response.body.id;
+                const loginResponse = await api.post('/signin').send(userBody);
+                token = loginResponse.body.token;
+            });
+        
+            it('Should respond with 200 if get networks correctly with correct id', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                
+                const result = await api.post('/credentials').set("Authorization", `Bearer ${token}`).send(body);
+                const result1 = await api.get(`/credentials/${result.body.id}`).set("Authorization", `Bearer ${token}`);
+
+        
+                expect(result1.status).toBe(httpStatus.OK)
+            });
+            it('Should respond with 404 if given wrong id', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                
+                const result = await api.post('/credentials').set("Authorization", `Bearer ${token}`).send(body);
+                const result1 = await api.get(`/credentials/${0}`).set("Authorization", `Bearer ${token}`);
+
+        
+                expect(result1.status).toBe(httpStatus.NOT_FOUND)
+            });
+        
+            it('Should respond with 401 if no authentication token is provided', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                const result = await api.get('/credentials').send(body);
+                expect(result.status).toBe(httpStatus.UNAUTHORIZED);
+            });
+        
+            it('Should respond with 401 if invalid authentication token is provided', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                const invalidToken = 'invalidToken';
+                
+                const result = await api.get('/credentials').set("Authorization", `Bearer ${invalidToken}`).send(body);
+                expect(result.status).toBe(httpStatus.UNAUTHORIZED);
+            });
+            it('Should respond with 401 if invalid authentication is provided', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                const invalidToken = 'invalidToken';
+                
+                const result = await api.get('/credentials').set("Authorization", `Bear ${invalidToken}`).send(body);
+                expect(result.status).toBe(httpStatus.UNAUTHORIZED);
+            });
+        });
+
+        describe('DELETE /credentials/:id', () => {
+            let token: string;
+            let userId: number;
+        
+            beforeAll(async () => {
+                const userBody = await generateBody();
+                const response = await api.post('/signup').send(userBody);
+                userId = response.body.id;
+                const loginResponse = await api.post('/signin').send(userBody);
+                token = loginResponse.body.token;
+            });
+        
+            it('Should respond with 200 if delete networks correctly with correct id', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                
+                const result = await api.post('/credentials').set("Authorization", `Bearer ${token}`).send(body);
+                const result1 = await api.delete(`/credentials/${result.body.id}`).set("Authorization", `Bearer ${token}`);
+
+        
+                expect(result1.status).toBe(httpStatus.OK)
+            });
+            it('Should respond with 404 if given wrong id', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                
+                const result = await api.post('/credentials').set("Authorization", `Bearer ${token}`).send(body);
+                const result1 = await api.delete(`/credentials/${0}`).set("Authorization", `Bearer ${token}`);
+
+        
+                expect(result1.status).toBe(httpStatus.NOT_FOUND)
+            });
+        
+            it('Should respond with 401 if no authentication token is provided', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                const result = await api.post('/credentials').set("Authorization", `Bearer ${token}`).send(body);
+
+                const result1 = await api.delete(`/credentials/${result.body.id}`).send(body);
+                expect(result1.status).toBe(httpStatus.UNAUTHORIZED);
+            });
+        
+            it('Should respond with 401 if invalid authentication token is provided', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                const invalidToken = 'invalidToken';
+                
+                const result = await api.post('/credentials').set("Authorization", `Bearer ${token}`).send(body);
+
+                const result1 = await api.get(`/credentials/${result.body.id}`).set("Authorization", `Bearer ${invalidToken}`).send(body);
+                expect(result1.status).toBe(httpStatus.UNAUTHORIZED);
+            });
+            it('Should respond with 401 if invalid authentication is provided', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                const invalidToken = 'invalidToken';
+                
+                const result = await api.post('/credentials').set("Authorization", `Bearer ${token}`).send(body);
+                const result1 = await api.get(`/credentials/${result.body.id}`).set("Authorization", `Bear ${invalidToken}`).send(body);
+                expect(result1.status).toBe(httpStatus.UNAUTHORIZED);
+            });
+        });
