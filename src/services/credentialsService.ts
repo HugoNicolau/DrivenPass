@@ -37,7 +37,7 @@ async function postCredentials(credential: CredentialType, userId: number):Promi
   return result;
 }
 
-async function getCredentials(id: number) {
+async function getCredentials(id: number): Promise<CredentialType[]> {
     const userCredentials = await credentialsRepository.getCredentials(id);
     
     const newCredentials = userCredentials.map(async (credential) => {
@@ -50,7 +50,7 @@ async function getCredentials(id: number) {
     return Promise.all(newCredentials);
 }
 
-async function getOneCredential(userId:number, id:number){
+async function getOneCredential(userId:number, id:number): Promise<CredentialType>{
   const userCredential = await credentialsRepository.getOneCredential(userId, id);
   if(!userCredential){
     throw notFoundError();
@@ -61,12 +61,12 @@ async function getOneCredential(userId:number, id:number){
   return userCredential;
 }
 
-async function deleteOneCredential(userId:number, id:number){
+async function deleteOneCredential(userId:number, id:number): Promise<void>{
   const deleted = await credentialsRepository.deleteOneCredential(userId, id);
   if(deleted.count==0){
     throw notFoundError();
   }
-  return deleted;
+  return
 }
 
 async function encryptPass(password: string) {
