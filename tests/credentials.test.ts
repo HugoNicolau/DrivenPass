@@ -6,7 +6,7 @@
         //TEM QUE FORNECER NOME, URL, SENHA E TITULO
         //TITULO TEM QUE SER UNICO PRO USER
         //SUCESSO = 201
-        //PASSAR PELA CRIPTOGRAFIA?
+        //PASSAR PELA CRuserNameTOGRAFIA?
     //GET
         //TEM QUE VOLTAR VAZIO SE TIVER VAZIO
         //SUCESSO VOLTA UM ARRAY DE OBJETOS E 200
@@ -38,11 +38,11 @@
                 token = loginResponse.body.token;
             });
         
-            it('Should respond with 201 if network is correctly created', async() => {
+            it('Should respond with 201 if credential is correctly created', async() => {
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 
@@ -51,10 +51,10 @@
                 expect(result.status).toBe(httpStatus.CREATED)
             });
 
-            it('Should respond with 400 if network fail schemaValidation', async() => {
+            it('Should respond with 400 if credential fail schemaValidation', async() => {
                 const body = {
                     title: faker.lorem.words(2),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 
@@ -63,11 +63,11 @@
                 expect(result.status).toBe(httpStatus.BAD_REQUEST)
             });
 
-            it('Should respond with 401 if network title is repeated', async() => {
+            it('Should respond with 401 if credential title is repeated', async() => {
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 
@@ -83,7 +83,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 const result = await api.post('/credentials').send(body);
@@ -94,7 +94,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 const invalidToken = 'invalidToken';
@@ -106,7 +106,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 const invalidToken = 'invalidToken';
@@ -128,11 +128,11 @@
                 token = loginResponse.body.token;
             });
         
-            it('Should respond with 200 if get networks correctly', async() => {
+            it('Should respond with 200 if get credentials correctly', async() => {
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 
@@ -147,7 +147,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 const result = await api.get('/credentials').send(body);
@@ -158,7 +158,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 const invalidToken = 'invalidToken';
@@ -170,7 +170,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 const invalidToken = 'invalidToken';
@@ -192,11 +192,11 @@
                 token = loginResponse.body.token;
             });
         
-            it('Should respond with 200 if get networks correctly with correct id', async() => {
+            it('Should respond with 200 if get credentials correctly with correct id', async() => {
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 
@@ -210,7 +210,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 
@@ -225,7 +225,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 const result = await api.get('/credentials').send(body);
@@ -236,7 +236,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 const invalidToken = 'invalidToken';
@@ -248,7 +248,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 const invalidToken = 'invalidToken';
@@ -270,11 +270,11 @@
                 token = loginResponse.body.token;
             });
         
-            it('Should respond with 200 if delete networks correctly with correct id', async() => {
+            it('Should respond with 200 if delete credentials correctly with correct id', async() => {
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 
@@ -288,7 +288,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 
@@ -303,7 +303,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 const result = await api.post('/credentials').set("Authorization", `Bearer ${token}`).send(body);
@@ -316,7 +316,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 const invalidToken = 'invalidToken';
@@ -330,7 +330,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    username: faker.internet.ip(),
+                    username: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };
                 const invalidToken = 'invalidToken';

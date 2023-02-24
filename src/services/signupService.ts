@@ -4,7 +4,7 @@ import { SignUpBody } from "../types/userTypes";
 import bcrypt from "bcrypt";
 import validationError from "../errors/validationError";
 import emailInUseError from "../errors/emailInUseError";
-import ServerError from "errors/serverError";
+import ServerError from "../errors/serverError";
 
 async function signUp(user: SignUpBody):Promise<void> {
   if(!user.email && !user.password){

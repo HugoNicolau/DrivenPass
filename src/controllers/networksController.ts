@@ -9,9 +9,12 @@ async function postNetworks(req: AuthenticatedRequest, res:Response){
     const network:NetworkType = req.body;
 
     try{
-        await networksService.postNetworks(network, userId);
-        return res.sendStatus(httpStatus.CREATED);
+        const result = await networksService.postNetworks(network, userId);
+        return res.status(httpStatus.CREATED).send(result);
     }catch(err){
+        if (err.name === "ValidationError") {
+            return res.status(httpStatus.BAD_REQUEST).send(err.message);
+          }
         console.log(err);
         return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
     }
