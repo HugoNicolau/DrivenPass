@@ -50,6 +50,34 @@
         
                 expect(result.status).toBe(httpStatus.CREATED)
             });
+
+            it('Should respond with 400 if network fail schemaValidation', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                
+                const result = await api.post('/credentials').set("Authorization", `Bearer ${token}`).send(body);
+        
+                expect(result.status).toBe(httpStatus.BAD_REQUEST)
+            });
+
+            it('Should respond with 401 if network title is repeated', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                
+                 await api.post('/credentials').set("Authorization", `Bearer ${token}`).send(body);
+
+                const result = await api.post('/credentials').set("Authorization", `Bearer ${token}`).send(body);
+
+        
+                expect(result.status).toBe(httpStatus.UNAUTHORIZED)
+            });
         
             it('Should respond with 401 if no authentication token is provided', async() => {
                 const body = {
@@ -72,6 +100,18 @@
                 const invalidToken = 'invalidToken';
                 
                 const result = await api.post('/credentials').set("Authorization", `Bearer ${invalidToken}`).send(body);
+                expect(result.status).toBe(httpStatus.UNAUTHORIZED);
+            });
+            it('Should respond with 401 if invalid authentication is provided', async() => {
+                const body = {
+                    title: faker.lorem.words(2),
+                    url: faker.internet.url(),
+                    username: faker.internet.ip(),
+                    password: faker.internet.password(10)
+                };
+                const invalidToken = 'invalidToken';
+                
+                const result = await api.post('/credentials').set("Authorization", `Bear ${invalidToken}`).send(body);
                 expect(result.status).toBe(httpStatus.UNAUTHORIZED);
             });
         });
