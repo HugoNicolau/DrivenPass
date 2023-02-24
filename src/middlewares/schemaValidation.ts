@@ -1,9 +1,9 @@
-import { SignUpBody } from "../types/userTypes.js";
-import { signupSchema, signinSchema } from "../schemas/userSchema.js";
-import { CredentialType } from "../types/credentialTypes.js";
-import { credentialSchema } from "../schemas/credentialSchema.js";
-import { NetworkType } from "../types/networkTypes.js";
-import { networkSchema } from "../schemas/networkSchema.js";
+import { SignUpBody } from "../types/userTypes";
+import { signupSchema, signinSchema } from "../schemas/userSchema";
+import { CredentialType } from "../types/credentialTypes";
+import { credentialSchema } from "../schemas/credentialSchema";
+import { NetworkType } from "../types/networkTypes";
+import { networkSchema } from "../schemas/networkSchema";
 
 
 function validateSignup(user: SignUpBody){

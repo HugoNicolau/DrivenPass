@@ -1,5 +1,5 @@
-import prisma from "../database/database.js";
-import { SignUpBody } from "../types/userTypes.js";
+import prisma from "../database/database";
+import { SignUpBody } from "../types/userTypes";
 
 async function signUp(user: SignUpBody) {
   return prisma.user.create({

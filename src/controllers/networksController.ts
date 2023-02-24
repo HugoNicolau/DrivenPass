@@ -1,8 +1,8 @@
-import { AuthenticatedRequest } from "../middlewares/authValidation.js";
+import { AuthenticatedRequest } from "../middlewares/authValidation";
 import { Response } from "express";
-import { NetworkType } from "../types/networkTypes.js";
+import { NetworkType } from "../types/networkTypes";
 import httpStatus from "http-status";
-import networksService from "../services/networksService.js";
+import networksService from "../services/networksService";
 
 async function postNetworks(req: AuthenticatedRequest, res:Response){
     const {userId} = req;

@@ -1,5 +1,5 @@
-import prisma from "../database/database.js";
-import { CredentialType } from "../types/credentialTypes.js";
+import prisma from "../database/database";
+import { CredentialType } from "../types/credentialTypes";
 
 async function titleInUseByUser(title: string) {
   return prisma.credential.findFirst({

@@ -1,9 +1,9 @@
-import validationError from "../errors/validationError.js";
-import schemaValidation from "../middlewares/schemaValidation.js";
-import { NetworkType } from "../types/networkTypes.js";
-import credentialsService from "./credentialsService.js";
-import networkRepository from "../repositories/networksRepository.js";
-import notFoundError from "../errors/notFoundError.js";
+import validationError from "../errors/validationError";
+import schemaValidation from "../middlewares/schemaValidation";
+import { NetworkType } from "../types/networkTypes";
+import credentialsService from "./credentialsService";
+import networkRepository from "../repositories/networksRepository";
+import notFoundError from "../errors/notFoundError";
 
 async function postNetworks(network:NetworkType, userId:number):Promise<NetworkType>{
 const validate = schemaValidation.validateNetwork(network);

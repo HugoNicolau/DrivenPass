@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-      "esModuleInterop": true,
-      "module": "es6",
-      "moduleResolution":"node",
-      "outDir": "dist"
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "baseUrl": "src",
   },
-  "ts-node":{
-      "esm":true
-  }
+  "ts-node": {
+    "esm": true
+  },
 }

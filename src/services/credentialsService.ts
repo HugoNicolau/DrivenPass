@@ -1,11 +1,11 @@
-import titleInUseError from "../errors/titleInUseError.js";
-import validationError from "../errors/validationError.js";
-import schemaValidation from "../middlewares/schemaValidation.js";
-import credentialsRepository from "../repositories/credentialsRepository.js";
-import { CredentialType } from "../types/credentialTypes.js";
+import titleInUseError from "../errors/titleInUseError";
+import validationError from "../errors/validationError";
+import schemaValidation from "../middlewares/schemaValidation";
+import credentialsRepository from "../repositories/credentialsRepository";
+import { CredentialType } from "../types/credentialTypes";
 import Cryptr from "cryptr";
 import dotenv from "dotenv";
-import notFoundError from "../errors/notFoundError.js";
+import notFoundError from "../errors/notFoundError";
 
 dotenv.config();
 const cryptr = new Cryptr(process.env.CRYPTR_SECRET as string);
@@ -69,12 +69,12 @@ async function deleteOneCredential(userId:number, id:number): Promise<void>{
   return
 }
 
-async function encryptPass(password: string) {
+async function encryptPass(password: string):Promise<string> {
   
   const encrypted = cryptr.encrypt(password);
   return encrypted;
 }
-async function decryptPass(password: string) {
+async function decryptPass(password: string):Promise<string> {
  
   const decrypted = cryptr.decrypt(password);
   return decrypted;

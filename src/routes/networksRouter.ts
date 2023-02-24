@@ -1,6 +1,6 @@
 import { Router } from "express";
-import networksController from "../controllers/networksController.js";
-import authFunctions from "../middlewares/authValidation.js";
+import networksController from "../controllers/networksController";
+import authFunctions from "../middlewares/authValidation";
 
 
 const networksRouter = Router()

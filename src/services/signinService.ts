@@ -1,13 +1,13 @@
-import signinRepository from "../repositories/signinRepository.js";
-import { SignUpBody } from "../types/userTypes.js";
+import signinRepository from "../repositories/signinRepository";
+import { SignUpBody } from "../types/userTypes";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import schemaValidation from "../middlewares/schemaValidation.js";
-import validationError from "../errors/validationError.js";
-import notFoundEmailError from "../errors/notFoundEmailError.js";
-import wrongPasswordError from "../errors/wrongPasswordError.js";
+import schemaValidation from "../middlewares/schemaValidation";
+import validationError from "../errors/validationError";
+import notFoundEmailError from "../errors/notFoundEmailError";
+import wrongPasswordError from "../errors/wrongPasswordError";
 
-async function signIn(user: SignUpBody) {
+async function signIn(user: SignUpBody): Promise<{token: string;}> {
   const { email, password } = user;
 
   const validate = schemaValidation.validateSignin(user);
@@ -31,11 +31,11 @@ async function signIn(user: SignUpBody) {
   return token;
 }
 
-async function comparePass(password: string, hash: string) {
+async function comparePass(password: string, hash: string):Promise<boolean> {
   return await bcrypt.compare(password, hash);
 }
 
-async function generateToken(userId: number) {
+async function generateToken(userId: number): Promise<{token: string;}> {
   const data = { userId };
   const secretKey = process.env.JWT_SECRET;
   console.log(data, "datagenerate");

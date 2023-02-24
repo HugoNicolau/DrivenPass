@@ -1,8 +1,8 @@
 import { Response } from "express";
-import { CredentialType } from "../types/credentialTypes.js";
-import { AuthenticatedRequest } from "../middlewares/authValidation.js";
+import { CredentialType } from "../types/credentialTypes";
+import { AuthenticatedRequest } from "../middlewares/authValidation";
 import httpStatus from "http-status";
-import credentialsService from "../services/credentialsService.js";
+import credentialsService from "../services/credentialsService";
 
 async function postCredentials(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;

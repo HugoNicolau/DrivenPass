@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import signupService from "../services/signupService.js";
+import signupService from "../services/signupService";
 
 async function signUp(req: Request, res: Response) {
   const user = req.body;
   try {
     await signupService.signUp(user);
-    return res.sendStatus(httpStatus.CREATED);
+    return res.status(httpStatus.CREATED);
   } catch (err) {
     if (err.name === "ValidationError") {
       return res.status(httpStatus.BAD_REQUEST).send(err.message);

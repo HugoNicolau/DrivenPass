@@ -1,11 +1,11 @@
-import schemaValidation from "../middlewares/schemaValidation.js";
-import signupRepository from "../repositories/signupRepository.js";
-import { SignUpBody } from "../types/userTypes.js";
+import schemaValidation from "../middlewares/schemaValidation";
+import signupRepository from "../repositories/signupRepository";
+import { SignUpBody } from "../types/userTypes";
 import bcrypt from "bcrypt";
-import validationError from "../errors/validationError.js";
-import emailInUseError from "../errors/emailInUseError.js";
+import validationError from "../errors/validationError";
+import emailInUseError from "../errors/emailInUseError";
 
-async function signUp(user: SignUpBody) {
+async function signUp(user: SignUpBody):Promise<void> {
   const { email, password } = user;
 
   const validate = schemaValidation.validateSignup(user);
@@ -25,12 +25,12 @@ async function signUp(user: SignUpBody) {
     password: hash,
   };
 
-  const createUser = signupRepository.signUp(userEncripted);
+  await signupRepository.signUp(userEncripted);
 
-  return createUser;
+  return
 }
 
-function encriptPass(password: string) {
+function encriptPass(password: string):Promise<string> {
   const hash = bcrypt.hash(password, 10);
   return hash;
 }

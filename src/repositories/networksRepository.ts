@@ -1,5 +1,5 @@
-import prisma from "../database/database.js";
-import { NetworkType } from "../types/networkTypes.js";
+import prisma from "../database/database";
+import { NetworkType } from "../types/networkTypes";
 
 async function postNetworks(networkFull: NetworkType) {
   const { userId, title, network, password } = networkFull;

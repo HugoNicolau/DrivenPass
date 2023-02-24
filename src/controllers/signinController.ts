@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import signinService from "../services/signinService.js";
+import signinService from "../services/signinService";
 
 async function signIn(req: Request, res: Response){
 const user = req.body;

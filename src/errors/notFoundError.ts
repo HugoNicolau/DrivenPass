@@ -1,4 +1,4 @@
-import { ApplicationError } from "../types/errorType.js";
+import { ApplicationError } from "../types/errorType";
 
 export default function notFoundError(): ApplicationError {
   return {
