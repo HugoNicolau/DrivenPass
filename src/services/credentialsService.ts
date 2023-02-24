@@ -13,7 +13,7 @@ const cryptr = new Cryptr(process.env.CRYPTR_SECRET as string);
 
 async function postCredentials(credential: CredentialType, userId: number):Promise<CredentialType> {
   
-  if(!credential){
+  if(Object.keys(credential).length === 0){
     throw ServerError()
   }
   const validate = schemaValidation.validateCredential(credential);
@@ -59,7 +59,9 @@ async function getCredentials(id: number): Promise<CredentialType[]> {
 
 async function getOneCredential(userId:number, id:number): Promise<CredentialType>{
   const userCredential = await credentialsRepository.getOneCredential(userId, id);
-  if(!userCredential){
+  
+  console.log(userCredential,"issoai")
+  if(!userCredential || Object.keys(userCredential).length === 0){
     throw notFoundError();
   }
   const decryptedPassword = await decryptPass(userCredential.password);

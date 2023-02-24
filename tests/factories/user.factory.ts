@@ -5,9 +5,9 @@ import bcrypt from "bcrypt";
 
 export async function createUser(body:SignUpBody) {
     const {email, password} = body
-    const newPassword = password || faker.internet.password(10)
+    const newPassword = password 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    const newEmail = email || faker.internet.email()
+    const newEmail = email 
 
     return await prisma.user.create({
         data:{
