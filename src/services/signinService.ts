@@ -21,7 +21,6 @@ async function signIn(user: SignUpBody): Promise<{token: string;}> {
     throw notFoundEmailError();
   }
   const confirmPass = await comparePass(password, userExists.password);
-  console.log("confirmapassresult", confirmPass)
   if (!confirmPass) {
 
     throw wrongPasswordError();
@@ -38,7 +37,6 @@ async function comparePass(password: string, hash: string):Promise<boolean> {
 async function generateToken(userId: number): Promise<{token: string;}> {
   const data = { userId };
   const secretKey = process.env.JWT_SECRET;
-  console.log(data, "datagenerate");
   const token = jwt.sign(data, secretKey);
   return { token };
 }

@@ -10,6 +10,8 @@ import prisma from "database/database";
 const api = supertest(app);
 
 beforeEach( async () => {
+    await prisma.network.deleteMany({})
+    await prisma.credential.deleteMany({})
     await prisma.user.deleteMany({})
 })
 
@@ -44,9 +46,7 @@ describe('POST /signup', () => {
 
     it('Should respond with 400 if email is already in use', async() => {
         const body = await generateBody();
-        console.log(body)
         const user = await createUser(body);
-        console.log(user)
         const result = await api.post('/signup').send(body);
         expect(result.status).toBe(httpStatus.BAD_REQUEST)
     })
