@@ -67,10 +67,7 @@ async function getOneCredential(
     id
   );
 
-  console.log(userCredential, "issoai");
   if (!userCredential || Object.keys(userCredential).length === 0) {
-    console.log(userCredential, "entrou aq");
-
     throw notFoundError();
   }
   const decryptedPassword = await decryptPass(userCredential.password);

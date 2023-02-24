@@ -29,10 +29,7 @@ async function getCredentials(req: AuthenticatedRequest, res: Response) {
     const credentials = await credentialsService.getCredentials(userId);
     res.status(httpStatus.OK).send(credentials);
   } catch (err) {
-    if (err.name === "NotFoundError") {
-      return res.status(httpStatus.NOT_FOUND).send(err.message);
-    }
-    res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    res.sendStatus(httpStatus.UNAUTHORIZED);
   }
 }
 

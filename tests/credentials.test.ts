@@ -259,7 +259,7 @@ describe("GET /credentials/:id", () => {
       username: faker.internet.userName(),
       password: faker.internet.password(10),
     };
-    const result = await api.get("/credentials").send(body);
+    const result = await api.get(`/credentials/${0}`).send(body);
     expect(result.status).toBe(httpStatus.UNAUTHORIZED);
   });
 
@@ -273,7 +273,7 @@ describe("GET /credentials/:id", () => {
     const invalidToken = "invalidToken";
 
     const result = await api
-      .get("/credentials")
+      .get(`/credentials/${0}`)
       .set("Authorization", `Bearer ${invalidToken}`)
       .send(body);
     expect(result.status).toBe(httpStatus.UNAUTHORIZED);
@@ -288,7 +288,7 @@ describe("GET /credentials/:id", () => {
     const invalidToken = "invalidToken";
 
     const result = await api
-      .get("/credentials")
+      .get(`/credentials/${0}`)
       .set("Authorization", `Bear ${invalidToken}`)
       .send(body);
     expect(result.status).toBe(httpStatus.UNAUTHORIZED);
