@@ -5,7 +5,7 @@ import credentialsService from "./credentialsService.js";
 import networkRepository from "../repositories/networksRepository.js";
 import notFoundError from "../errors/notFoundError.js";
 
-async function postNetworks(network:NetworkType, userId:number){
+async function postNetworks(network:NetworkType, userId:number):Promise<NetworkType>{
 const validate = schemaValidation.validateNetwork(network);
 if(validate){
     throw validationError(validate);
@@ -26,7 +26,7 @@ return result;
 
 }
 
-async function getNetworks(userId:number){
+async function getNetworks(userId:number):Promise<NetworkType[]>{
     const userNetworks = await networkRepository.getNetworks(userId);
   
     const newNetworks = userNetworks.map(async(net) => {
@@ -40,7 +40,7 @@ async function getNetworks(userId:number){
 
 }
 
-async function getOneNetwork(userId:number, id:number){
+async function getOneNetwork(userId:number, id:number):Promise<NetworkType>{
     const userNetWork = await networkRepository.getOneNetwork(userId,id);
     if(!userNetWork){
         throw notFoundError();
@@ -51,12 +51,12 @@ async function getOneNetwork(userId:number, id:number){
     return userNetWork;
 }
 
-async function deleteOneNetwork(userId:number, id:number){
+async function deleteOneNetwork(userId:number, id:number):Promise<void>{
     const deleted = await networkRepository.deleteOneNetwork(userId,id);
     if(deleted.count==0){
         throw notFoundError();
     }
-    return deleted;
+    return
 }
 
 

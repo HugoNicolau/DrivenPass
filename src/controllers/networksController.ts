@@ -47,8 +47,8 @@ async function deleteOneNetwork(req:AuthenticatedRequest, res:Response){
     try{
         const {userId}=req;
         const id:number = Number(req.params.id);
-        const result = await networksService.deleteOneNetwork(userId,id);
-        return res.status(httpStatus.OK).send(result);
+        await networksService.deleteOneNetwork(userId,id);
+        return res.sendStatus(httpStatus.OK)
     }catch(err){
         console.log(err);
         if(err.name==="NotFoundError"){
