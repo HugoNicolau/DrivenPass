@@ -52,7 +52,7 @@ const credentialsRepository = {
   saveCredential,
   getCredentials,
   getOneCredential,
-  deleteOneCredential
+  deleteOneCredential,
 };
 
 export default credentialsRepository;

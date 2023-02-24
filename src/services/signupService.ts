@@ -6,17 +6,17 @@ import validationError from "../errors/validationError";
 import emailInUseError from "../errors/emailInUseError";
 import ServerError from "../errors/serverError";
 
-async function signUp(user: SignUpBody):Promise<void> {
-  if(!user.email && !user.password){
-    throw ServerError()
+async function signUp(user: SignUpBody): Promise<void> {
+  if (!user.email && !user.password) {
+    throw ServerError();
   }
   const { email, password } = user;
 
   const validate = schemaValidation.validateSignup(user);
 
-  if(validate){
-    throw validationError(validate)
-}
+  if (validate) {
+    throw validationError(validate);
+  }
 
   const emailExistent = await signupRepository.emailAlreadyInUse(user);
   if (emailExistent) {
@@ -31,10 +31,10 @@ async function signUp(user: SignUpBody):Promise<void> {
 
   await signupRepository.signUp(userEncripted);
 
-  return
+  return;
 }
 
-function encriptPass(password: string):Promise<string> {
+function encriptPass(password: string): Promise<string> {
   const hash = bcrypt.hash(password, 10);
   return hash;
 }

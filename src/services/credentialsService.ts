@@ -11,14 +11,15 @@ import ServerError from "../errors/serverError";
 dotenv.config();
 const cryptr = new Cryptr(process.env.CRYPTR_SECRET as string);
 
-async function postCredentials(credential: CredentialType, userId: number):Promise<CredentialType> {
-  
-  if(Object.keys(credential).length === 0){
-    throw ServerError()
+async function postCredentials(
+  credential: CredentialType,
+  userId: number
+): Promise<CredentialType> {
+  if (Object.keys(credential).length === 0) {
+    throw ServerError();
   }
   const validate = schemaValidation.validateCredential(credential);
-  
-  
+
   if (validate) {
     throw validationError(validate);
   }
@@ -45,23 +46,31 @@ async function postCredentials(credential: CredentialType, userId: number):Promi
 }
 
 async function getCredentials(id: number): Promise<CredentialType[]> {
-    const userCredentials = await credentialsRepository.getCredentials(id);
-    
-    const newCredentials = userCredentials.map(async (credential) => {
-      const decryptedPassword = await decryptPass(credential.password);
-      return {
-        ...credential,
-        password: decryptedPassword
-      }
-    });
-    return Promise.all(newCredentials);
+  const userCredentials = await credentialsRepository.getCredentials(id);
+
+  const newCredentials = userCredentials.map(async (credential) => {
+    const decryptedPassword = await decryptPass(credential.password);
+    return {
+      ...credential,
+      password: decryptedPassword,
+    };
+  });
+  return Promise.all(newCredentials);
 }
 
-async function getOneCredential(userId:number, id:number): Promise<CredentialType>{
-  const userCredential = await credentialsRepository.getOneCredential(userId, id);
-  
-  console.log(userCredential,"issoai")
-  if(!userCredential || Object.keys(userCredential).length === 0){
+async function getOneCredential(
+  userId: number,
+  id: number
+): Promise<CredentialType> {
+  const userCredential = await credentialsRepository.getOneCredential(
+    userId,
+    id
+  );
+
+  console.log(userCredential, "issoai");
+  if (!userCredential || Object.keys(userCredential).length === 0) {
+    console.log(userCredential, "entrou aq");
+
     throw notFoundError();
   }
   const decryptedPassword = await decryptPass(userCredential.password);
@@ -70,25 +79,30 @@ async function getOneCredential(userId:number, id:number): Promise<CredentialTyp
   return userCredential;
 }
 
-async function deleteOneCredential(userId:number, id:number): Promise<void>{
+async function deleteOneCredential(userId: number, id: number): Promise<void> {
   const deleted = await credentialsRepository.deleteOneCredential(userId, id);
-  if(deleted.count==0){
+  if (deleted.count == 0) {
     throw notFoundError();
   }
-  return
+  return;
 }
 
-async function encryptPass(password: string):Promise<string> {
-  
+async function encryptPass(password: string): Promise<string> {
   const encrypted = cryptr.encrypt(password);
   return encrypted;
 }
-async function decryptPass(password: string):Promise<string> {
- 
+async function decryptPass(password: string): Promise<string> {
   const decrypted = cryptr.decrypt(password);
   return decrypted;
 }
 
-const credentialsService = { postCredentials, encryptPass, decryptPass, getCredentials, getOneCredential, deleteOneCredential };
+const credentialsService = {
+  postCredentials,
+  encryptPass,
+  decryptPass,
+  getCredentials,
+  getOneCredential,
+  deleteOneCredential,
+};
 
 export default credentialsService;

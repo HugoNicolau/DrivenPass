@@ -244,13 +244,6 @@ describe("GET /credentials/:id", () => {
     expect(result1.status).toBe(httpStatus.OK);
   });
   it("Should respond with 404 if given wrong id", async () => {
-    const body = {
-      title: faker.lorem.words(1),
-      url: faker.internet.url(),
-      username: faker.internet.userName(),
-      password: faker.internet.password(10),
-    };
-
    
     const result1 = await api
       .get(`/credentials/${0}`)

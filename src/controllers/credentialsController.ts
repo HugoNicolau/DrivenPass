@@ -23,27 +23,27 @@ async function postCredentials(req: AuthenticatedRequest, res: Response) {
   }
 }
 
-async function getCredentials(req:AuthenticatedRequest, res: Response){
-    const {userId} = req;
-    try{
-        const credentials = await credentialsService.getCredentials(userId);
-        res.status(httpStatus.OK).send(credentials);
-    }catch(err){
-        if(err.name==="NotFoundError"){
-          return res.status(httpStatus.NOT_FOUND).send(err.message);
-        }
-        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+async function getCredentials(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  try {
+    const credentials = await credentialsService.getCredentials(userId);
+    res.status(httpStatus.OK).send(credentials);
+  } catch (err) {
+    if (err.name === "NotFoundError") {
+      return res.status(httpStatus.NOT_FOUND).send(err.message);
     }
+    res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+  }
 }
 
-async function getOneCredential(req:AuthenticatedRequest, res:Response){
-  const {userId} = req;
-  const id:number = Number(req.params.id);
-  try{
+async function getOneCredential(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const id: number = Number(req.params.id);
+  try {
     const credential = await credentialsService.getOneCredential(userId, id);
     return res.status(httpStatus.OK).send(credential);
-  }catch(err){
-    if(err.name==="NotFoundError"){
+  } catch (err) {
+    if (err.name === "NotFoundError") {
       return res.status(httpStatus.NOT_FOUND).send(err.message);
     }
     console.log(err);
@@ -51,22 +51,26 @@ async function getOneCredential(req:AuthenticatedRequest, res:Response){
   }
 }
 
-async function deleteOneCredential(req:AuthenticatedRequest, res:Response){
-  const {userId} = req;
-  const id:number = Number(req.params.id);
-  try{
-    await credentialsService.deleteOneCredential(userId,id);
+async function deleteOneCredential(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const id: number = Number(req.params.id);
+  try {
+    await credentialsService.deleteOneCredential(userId, id);
     return res.sendStatus(httpStatus.OK);
-
-  }catch(err){
+  } catch (err) {
     console.log(err);
-    if(err.name==="NotFoundError"){
+    if (err.name === "NotFoundError") {
       return res.status(httpStatus.NOT_FOUND).send(err.message);
     }
     res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 }
 
-const credentialsController = { postCredentials, getCredentials, getOneCredential, deleteOneCredential };
+const credentialsController = {
+  postCredentials,
+  getCredentials,
+  getOneCredential,
+  deleteOneCredential,
+};
 
 export default credentialsController;
