@@ -8,10 +8,6 @@ import networksRouter from "./routes/networksRouter";
 const app = express();
 app.use(express.json());
 
-app.get("/health", (req: Request, res: Response) => {
-  res.send("Ok!");
-});
-
 app.use(signupRouter);
 app.use(signinRouter);
 app.use(credentialsRouter);
