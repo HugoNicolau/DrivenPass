@@ -6,7 +6,7 @@ async function signUp(req: Request, res: Response) {
   const user = req.body;
   try {
     await signupService.signUp(user);
-    return res.status(httpStatus.CREATED);
+    return res.sendStatus(httpStatus.CREATED);
   } catch (err) {
     if (err.name === "ValidationError") {
       return res.status(httpStatus.BAD_REQUEST).send(err.message);

@@ -1,6 +1,6 @@
-import prisma from "../../src/database/database.js";
+import prisma from "database/database";
 import { faker } from "@faker-js/faker";
-import { SignUpBody } from "../../src/types/userTypes.js";
+import { SignUpBody } from "../../src/types/userTypes";
 import bcrypt from "bcrypt";
 
 export async function createUser(body:SignUpBody) {

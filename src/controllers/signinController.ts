@@ -6,7 +6,7 @@ async function signIn(req: Request, res: Response){
 const user = req.body;
 try{
     const loginUser = await signinService.signIn(user);
-    return res.status(httpStatus.CREATED).send(loginUser);
+    return res.status(httpStatus.OK).send(loginUser);
 } catch(err){
     if(err.name === "ValidationError"){
         return res.status(httpStatus.BAD_REQUEST).send(err.message);
