@@ -9,7 +9,7 @@ import prisma from "database/database";
 
 const api = supertest(app);
 
-beforeEach( async () => {
+beforeAll( async () => {
     await prisma.network.deleteMany({})
     await prisma.credential.deleteMany({})
     await prisma.user.deleteMany({})

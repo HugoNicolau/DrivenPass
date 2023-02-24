@@ -42,7 +42,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    network: faker.internet.ip(),
+                    username: faker.internet.ip(),
                     password: faker.internet.password(10)
                 };
                 
@@ -55,7 +55,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    network: faker.internet.ip(),
+                    username: faker.internet.ip(),
                     password: faker.internet.password(10)
                 };
                 const result = await api.post('/credentials').send(body);
@@ -66,7 +66,7 @@
                 const body = {
                     title: faker.lorem.words(2),
                     url: faker.internet.url(),
-                    network: faker.internet.ip(),
+                    username: faker.internet.ip(),
                     password: faker.internet.password(10)
                 };
                 const invalidToken = 'invalidToken';
