@@ -15,7 +15,7 @@ async function postCredentials(req: AuthenticatedRequest, res: Response) {
   } catch (err) {
     console.log(err);
     if (err.name === "TitleInUseError") {
-      return res.sendStatus(httpStatus.BAD_REQUEST);
+      return res.sendStatus(httpStatus.UNAUTHORIZED);
     }
     if (err.name === "ValidationError") {
       return res.status(httpStatus.BAD_REQUEST).send(err.message);

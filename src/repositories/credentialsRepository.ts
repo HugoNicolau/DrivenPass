@@ -1,5 +1,5 @@
 import prisma from "../database/database.js";
-import { credentialType } from "../types/credentialTypes.js";
+import { CredentialType } from "../types/credentialTypes.js";
 
 async function titleInUseByUser(title: string) {
   return prisma.credential.findFirst({
@@ -9,7 +9,7 @@ async function titleInUseByUser(title: string) {
   });
 }
 
-async function saveCredential(credential: credentialType) {
+async function saveCredential(credential: CredentialType) {
   const { userId, title, url, username, password } = credential;
   return prisma.credential.create({
     data: {
