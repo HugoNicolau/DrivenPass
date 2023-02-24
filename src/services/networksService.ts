@@ -1,14 +1,9 @@
 import validationError from "../errors/validationError.js";
 import schemaValidation from "../middlewares/schemaValidation.js";
 import { NetworkType } from "../types/networkTypes.js";
-// import Cryptr from "cryptr";
-// import dotenv from "dotenv";
 import credentialsService from "./credentialsService.js";
 import networkRepository from "../repositories/networksRepository.js";
-
-// dotenv.config();
-// const cryptr = new Cryptr(process.env.CRYPTR_SECRET as string);
-
+import notFoundError from "../errors/notFoundError.js";
 
 async function postNetworks(network:NetworkType, userId:number){
 const validate = schemaValidation.validateNetwork(network);
@@ -33,6 +28,7 @@ return result;
 
 async function getNetworks(userId:number){
     const userNetworks = await networkRepository.getNetworks(userId);
+  
     const newNetworks = userNetworks.map(async(net) => {
         const decryptedPassword = await credentialsService.decryptPass(net.password);
         return {
@@ -46,6 +42,9 @@ async function getNetworks(userId:number){
 
 async function getOneNetwork(userId:number, id:number){
     const userNetWork = await networkRepository.getOneNetwork(userId,id);
+    if(!userNetWork){
+        throw notFoundError();
+    }
     const decryptedPassword = await credentialsService.decryptPass(userNetWork.password);
     userNetWork.password = decryptedPassword;
 
@@ -54,6 +53,9 @@ async function getOneNetwork(userId:number, id:number){
 
 async function deleteOneNetwork(userId:number, id:number){
     const deleted = await networkRepository.deleteOneNetwork(userId,id);
+    if(deleted.count==0){
+        throw notFoundError();
+    }
     return deleted;
 }
 

@@ -1,5 +1,5 @@
 import { signUpBody } from "../types/userTypes.js";
-import { signupSchema } from "../schemas/userSchema.js";
+import { signupSchema, signinSchema } from "../schemas/userSchema.js";
 import { credentialType } from "../types/credentialTypes.js";
 import { credentialSchema } from "../schemas/credentialSchema.js";
 import { NetworkType } from "../types/networkTypes.js";
@@ -8,6 +8,14 @@ import { networkSchema } from "../schemas/networkSchema.js";
 
 function validateSignup(user: signUpBody){
     const validation = signupSchema.validate(user);
+    if(validation.error){
+        const errors = validation.error.details.map( detail => detail.message);
+        
+        return errors;
+    }
+}
+function validateSignin(user: signUpBody){
+    const validation = signinSchema.validate(user);
     if(validation.error){
         const errors = validation.error.details.map( detail => detail.message);
         
@@ -31,7 +39,7 @@ function validateNetwork(network:NetworkType){
     }
 }
 
-const schemaValidation = {validateSignup, validateCredential, validateNetwork}
+const schemaValidation = {validateSignup, validateSignin, validateCredential, validateNetwork}
 
 
 export default schemaValidation;

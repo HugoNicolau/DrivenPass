@@ -31,6 +31,9 @@ async function getCredentials(req:AuthenticatedRequest, res: Response){
         res.status(httpStatus.OK).send(credentials);
     }catch(err){
         console.log(err);
+        if(err.name==="NotFoundError"){
+          return res.status(httpStatus.NOT_FOUND).send(err.message);
+        }
         res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
     }
 }
@@ -42,6 +45,9 @@ async function getOneCredential(req:AuthenticatedRequest, res:Response){
     const credential = await credentialsService.getOneCredential(userId, id);
     return res.status(httpStatus.OK).send(credential);
   }catch(err){
+    if(err.name==="NotFoundError"){
+      return res.status(httpStatus.NOT_FOUND).send(err.message);
+    }
     console.log(err);
     res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
@@ -51,11 +57,14 @@ async function deleteOneCredential(req:AuthenticatedRequest, res:Response){
   const {userId} = req;
   const id:number = Number(req.params.id);
   try{
-    const result = await credentialsService.deleteOneCredential(userId,id);
-    return res.status(httpStatus.OK).send(result);
+    await credentialsService.deleteOneCredential(userId,id);
+    return res.sendStatus(httpStatus.OK);
 
   }catch(err){
     console.log(err);
+    if(err.name==="NotFoundError"){
+      return res.status(httpStatus.NOT_FOUND).send(err.message);
+    }
     res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 }

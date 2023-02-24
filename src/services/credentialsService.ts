@@ -5,6 +5,7 @@ import credentialsRepository from "../repositories/credentialsRepository.js";
 import { credentialType } from "../types/credentialTypes.js";
 import Cryptr from "cryptr";
 import dotenv from "dotenv";
+import notFoundError from "../errors/notFoundError.js";
 
 dotenv.config();
 const cryptr = new Cryptr(process.env.CRYPTR_SECRET as string);
@@ -38,6 +39,7 @@ async function postCredentials(credential: credentialType, userId: number) {
 
 async function getCredentials(id: number) {
     const userCredentials = await credentialsRepository.getCredentials(id);
+    
     const newCredentials = userCredentials.map(async (credential) => {
       const decryptedPassword = await decryptPass(credential.password);
       return {
@@ -50,7 +52,9 @@ async function getCredentials(id: number) {
 
 async function getOneCredential(userId:number, id:number){
   const userCredential = await credentialsRepository.getOneCredential(userId, id);
-  
+  if(!userCredential){
+    throw notFoundError();
+  }
   const decryptedPassword = await decryptPass(userCredential.password);
   userCredential.password = decryptedPassword;
 
@@ -59,6 +63,9 @@ async function getOneCredential(userId:number, id:number){
 
 async function deleteOneCredential(userId:number, id:number){
   const deleted = await credentialsRepository.deleteOneCredential(userId, id);
+  if(deleted.count==0){
+    throw notFoundError();
+  }
   return deleted;
 }
 

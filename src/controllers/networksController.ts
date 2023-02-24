@@ -36,6 +36,9 @@ async function getOneNetwork(req:AuthenticatedRequest, res:Response){
         return res.status(httpStatus.OK).send(result);
     }catch(err){
         console.log(err);
+        if(err.name==="NotFoundError"){
+            return res.status(httpStatus.NOT_FOUND).send(err.message);
+          }
         return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
     }
 }
@@ -48,6 +51,9 @@ async function deleteOneNetwork(req:AuthenticatedRequest, res:Response){
         return res.status(httpStatus.OK).send(result);
     }catch(err){
         console.log(err);
+        if(err.name==="NotFoundError"){
+            return res.status(httpStatus.NOT_FOUND).send(err.message);
+          }
         return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
     }
 }

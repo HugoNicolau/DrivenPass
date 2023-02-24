@@ -5,8 +5,8 @@ import signupService from "../services/signupService.js";
 async function signUp(req: Request, res: Response) {
   const user = req.body;
   try {
-    const createUser = await signupService.signUp(user);
-    return res.status(httpStatus.CREATED).send(createUser);
+    await signupService.signUp(user);
+    return res.sendStatus(httpStatus.CREATED);
   } catch (err) {
     if (err.name === "ValidationError") {
       return res.status(httpStatus.BAD_REQUEST).send(err.message);

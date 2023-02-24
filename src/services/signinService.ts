@@ -10,22 +10,19 @@ import wrongPasswordError from "../errors/wrongPasswordError.js";
 async function signIn(user: signUpBody) {
   const { email, password } = user;
 
-  const validate = schemaValidation.validateSignup(user);
+  const validate = schemaValidation.validateSignin(user);
   if (validate) {
-    console.log("1");
     throw validationError(validate);
   }
 
   const userExists = await signinRepository.getUser(user);
   if (!userExists) {
-    console.log("2");
 
     throw notFoundEmailError();
   }
   const confirmPass = await comparePass(password, userExists.password);
   console.log("confirmapassresult", confirmPass)
   if (!confirmPass) {
-    console.log("3");
 
     throw wrongPasswordError();
   }
