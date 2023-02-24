@@ -6,12 +6,19 @@ import { CredentialType } from "../types/credentialTypes";
 import Cryptr from "cryptr";
 import dotenv from "dotenv";
 import notFoundError from "../errors/notFoundError";
+import ServerError from "../errors/serverError";
 
 dotenv.config();
 const cryptr = new Cryptr(process.env.CRYPTR_SECRET as string);
 
 async function postCredentials(credential: CredentialType, userId: number):Promise<CredentialType> {
+  
+  if(!credential){
+    throw ServerError()
+  }
   const validate = schemaValidation.validateCredential(credential);
+  
+  
   if (validate) {
     throw validationError(validate);
   }

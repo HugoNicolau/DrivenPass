@@ -13,7 +13,6 @@ async function postCredentials(req: AuthenticatedRequest, res: Response) {
 
     res.status(httpStatus.CREATED).send(result);
   } catch (err) {
-    console.log(err);
     if (err.name === "TitleInUseError") {
       return res.sendStatus(httpStatus.UNAUTHORIZED);
     }
@@ -30,7 +29,6 @@ async function getCredentials(req:AuthenticatedRequest, res: Response){
         const credentials = await credentialsService.getCredentials(userId);
         res.status(httpStatus.OK).send(credentials);
     }catch(err){
-        console.log(err);
         if(err.name==="NotFoundError"){
           return res.status(httpStatus.NOT_FOUND).send(err.message);
         }

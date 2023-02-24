@@ -40,7 +40,7 @@
         
             it('Should respond with 201 if network is correctly created', async() => {
                 const body = {
-                    title: faker.lorem.words(2),
+                    title: faker.lorem.words(1),
                     network: faker.internet.userName(),
                     password: faker.internet.password(10)
                 };

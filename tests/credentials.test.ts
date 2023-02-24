@@ -40,7 +40,7 @@
         
             it('Should respond with 201 if credential is correctly created', async() => {
                 const body = {
-                    title: faker.lorem.words(2),
+                    title: faker.lorem.words(1),
                     url: faker.internet.url(),
                     username: faker.internet.userName(),
                     password: faker.internet.password(10)
@@ -65,7 +65,7 @@
 
             it('Should respond with 401 if credential title is repeated', async() => {
                 const body = {
-                    title: faker.lorem.words(2),
+                    title: faker.lorem.words(1),
                     url: faker.internet.url(),
                     username: faker.internet.userName(),
                     password: faker.internet.password(10)

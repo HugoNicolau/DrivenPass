@@ -46,11 +46,11 @@ describe('POST /signin', () => {
 
     it('Should respond with 400 if password is wrong', async() => {
         const body = await generateBody();
-        const user = createUser(body);
+        const user = await createUser(body);
         
         const tryLoginUser = {
             email:body.email,
-            password:"111"
+            password:"11111111111"
         }
         const result = await api.post('/signin').send(tryLoginUser);
         expect(result.status).toBe(httpStatus.BAD_REQUEST)

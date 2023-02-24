@@ -27,7 +27,6 @@ async function auth(req:AuthenticatedRequest, res:Response, next:NextFunction){
         
         return next();
     }catch(err){
-        console.log(err);
             return res.sendStatus(httpStatus.UNAUTHORIZED);
        
     }
